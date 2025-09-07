@@ -84,23 +84,47 @@ Django provides special template tags to help you organize and reuse your HTML c
 * **`block.super`:** Keeps the parent block’s content and lets you add to it instead of fully replacing it.
 * **Example use case:** In the `<title>` tag, you can keep the base title and add a page-specific title.
 
-
 ## 4. URL Handling Tags
 
-### Basic URL
+Django’s `{% url %}` tag is used to **dynamically generate URLs** in templates. Instead of hardcoding paths (`/products/123/`), you reference the view name from your `urls.py`. This makes links reliable and easier to maintain when URLs change.
+
+---
+
+### **Basic URL**
+
 ```django
 <a href="{% url 'view_name' %}">Link</a>
 ```
 
-### With Arguments
+* **Purpose:** Generate a URL to a view using its name from `urls.py`.
+* **Why:** If you later change the actual path in `urls.py`, your templates will still work as long as the view name stays the same.
+* **Example use case:** Linking to a home page or about page.
+
+---
+
+### **With Arguments**
+
 ```django
 {% url 'product_detail' product.id %}
 ```
 
-### Namespaced URLs
+* **Purpose:** Pass arguments (like IDs or slugs) that the view expects.
+* **Positional arguments:** Values passed in the same order they appear in `urls.py`.
+* **Example use case:** Linking to a specific product detail page using `product.id`.
+
+---
+
+### **Namespaced URLs**
+
 ```django
 {% url 'shop:product_view' category='electronics' %}
 ```
+
+* **Purpose:** Resolve view names when multiple apps have similarly named views.
+* **Namespace:** Defined in the app’s `urls.py` with `app_name = 'shop'`.
+* **Keyword arguments:** You can pass named parameters if the URL pattern requires them.
+* **Example use case:** Linking to `shop` app’s product view, ensuring no conflicts with another app’s product view.
+
 
 ## 5. Special Purpose Tags
 
