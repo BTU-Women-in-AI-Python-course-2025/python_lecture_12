@@ -136,14 +136,7 @@ def shorten_text(value, length=10):
 {{ user_input|escape }}     # HTML escape
 ```
 
-## 8. Performance Tips
-
-1. Avoid expensive operations in filters
-2. Cache filtered results when possible
-3. Use `unordered_list` for nested structures
-4. Consider pre-processing in views for complex cases
-
-## 9. Debugging Filters
+## 8. Debugging Filters
 
 ### Common Issues
 1. **Missing Load Tag**: Forgot `{% load custom_filters %}`
