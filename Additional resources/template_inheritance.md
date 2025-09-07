@@ -131,22 +131,52 @@ templates/
 
 ## 6. Troubleshooting
 
-### Common Issues
-1. **Missing Blocks**: Forgetting required blocks
-2. **Circular Extends**: A extends B extends A
-3. **Block Overrides**: Accidentally overriding critical blocks
-4. **Context Problems**: Missing parent template variables
+### Common Problems
 
-### Debugging Techniques
-1. **Template Debugging**:
+1. **Missing Blocks**
+   You forgot to define a block that the parent template expects.
+   → Fix: Make sure your child template has all the required `{% block ... %}{% endblock %}` sections.
+
+2. **Circular Extends**
+   Template A extends B, but B also extends A — endless loop.
+   → Fix: Double-check your `{% extends %}` chain. Each template should eventually end at `base.html`.
+
+3. **Block Overrides**
+   Accidentally replacing important content from the parent template.
+   → Fix: Use different block names for different sections. Be careful when reusing block names.
+
+4. **Context Issues**
+   A variable from the parent template doesn’t show up in the child.
+   → Fix: Make sure your view passes the data, or that it’s provided by a context processor.
+
+---
+
+### How to Debug
+
+1. **See all variables**
+
    ```django
-   {% debug %}  {# Shows available context #}
+   {% debug %}
    ```
-2. **Inheritance Visualization**:
+
+   → Prints everything in the template context (great for figuring out what’s missing).
+
+2. **Find template location**
+
    ```bash
-   python manage.py find_template <template_name>
+   python manage.py find_template home.html
    ```
-3. **Block Inspection**:
+
+   → Shows which file Django is actually using when you render a template.
+
+3. **Mark your blocks**
+
    ```django
-   {% block %}...{% endblock %} comments
+   {% block content %}
+     <!-- content block starts -->
+     {{ variable }}
+     <!-- content block ends -->
+   {% endblock %}
    ```
+
+   → Adding comments makes it easy to see which block is being used.
