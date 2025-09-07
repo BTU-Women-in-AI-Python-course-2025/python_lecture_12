@@ -125,17 +125,29 @@ Django’s `{% url %}` tag is used to **dynamically generate URLs** in templates
 * **Keyword arguments:** You can pass named parameters if the URL pattern requires them.
 * **Example use case:** Linking to `shop` app’s product view, ensuring no conflicts with another app’s product view.
 
-
 ## 5. Special Purpose Tags
 
-### CSRF Protection
+These tags don’t control structure or URLs but serve **specific purposes** like security, commenting, and debugging.
+
+---
+
+### **CSRF Protection**
+
 ```django
-<form>
+<form method="post">
   {% csrf_token %}
 </form>
 ```
 
-### Comments
+* **Purpose:** Protects forms against **Cross-Site Request Forgery (CSRF)** attacks.
+* **How it works:** Generates a hidden token that must match the one stored in the user’s session.
+* **When to use:** Always include inside any `<form>` that makes a `POST` request.
+* ⚠️ Without `{% csrf_token %}`, Django will reject the form submission with a `403 Forbidden` error.
+
+---
+
+### **Comments**
+
 ```django
 {# Single-line comment #}
 
@@ -145,10 +157,27 @@ Django’s `{% url %}` tag is used to **dynamically generate URLs** in templates
 {% endcomment %}
 ```
 
-### Debugging
+* **Purpose:** Add notes or temporarily disable template code.
+* **Types:**
+
+  * `{# ... #}` → short, inline comments.
+  * `{% comment %} ... {% endcomment %}` → larger blocks, can include template tags.
+* **Important:** These comments **do not appear** in the rendered HTML (unlike HTML `<!-- ... -->` comments).
+
+---
+
+### **Debugging**
+
 ```django
 {% debug %}  {# Shows complete context #}
 ```
+
+* **Purpose:** Displays all variables currently available in the template’s context.
+* **Output:** A dictionary-like dump, including `user`, `request`, `csrf_token`, and any variables you passed in.
+* **Visibility:** It appears **directly on the rendered page** (not in the console).
+* **When to use:** Debugging variable availability during development.
+* ⚠️ Never leave `{% debug %}` in production—it exposes sensitive data.
+
 
 ## 6. Custom Template Tags
 
