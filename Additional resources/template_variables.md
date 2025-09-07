@@ -124,15 +124,7 @@ Automatic escaping:
 {{ safe_html|safe }}  # Marked as safe
 ```
 
-## 8. Best Practices
-
-1. **Keep Logic Minimal**: Move complex logic to views/models
-2. **Use Meaningful Names**: `{{ product.price }}` not `{{ p.p }}`
-3. **Handle Missing Data**: Use default filter or template conditions
-4. **Performance**: Avoid expensive method calls in templates
-5. **Security**: Never mark untrusted content as safe
-
-## 9. Debugging Variables
+## 8. Debugging Variables
 
 ### Techniques
 1. Use `{% debug %}` tag to see all available variables
