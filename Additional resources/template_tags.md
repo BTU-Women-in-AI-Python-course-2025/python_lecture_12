@@ -180,13 +180,68 @@ These tags don’t control structure or URLs but serve **specific purposes** lik
 
 ## 6. Debugging Template Tags
 
-### Common Issues
-1. **Missing Load Tag**: Forgot `{% load custom_tags %}`
-2. **Syntax Errors**: Improper tag nesting
-3. **Context Issues**: Missing required variables
-4. **Circular Extends**: Infinite template inheritance
+When templates don’t behave as expected, the issue is often with missing context, incorrect tag usage, or template inheritance. Django provides ways to track and fix these problems.
 
-### Debugging Techniques
-1. Check `django.template` logger
-2. Use `{% debug %}` to inspect context
-3. Verify template loaders in settings
+---
+
+### **Common Issues**
+
+1. **Missing Load Tag**
+
+   ```django
+   {% load custom_tags %}
+   ```
+
+   * **Problem:** Custom filters or tags don’t work.
+   * **Fix:** Ensure you’ve loaded the correct template tag library at the top of your template.
+
+2. **Syntax Errors**
+
+   ```django
+   {% if user.is_authenticated %}
+     Hello
+   {% endif %}
+   ```
+
+   * **Problem:** Forgetting `{% endif %}`, misplacing braces, or nesting tags incorrectly.
+   * **Fix:** Check that every `{% if %}`, `{% for %}`, etc. has a proper closing tag.
+
+3. **Context Issues**
+
+   ```django
+   {{ product.name }}
+   ```
+
+   * **Problem:** Variable doesn’t exist in the context (e.g., `product` wasn’t passed from the view).
+   * **Fix:** Double-check the view’s `context` dictionary or `render()` call.
+
+4. **Circular Extends**
+
+   ```django
+   {% extends "base.html" %}
+   ```
+
+   * **Problem:** Template A extends B, and B extends A → infinite loop.
+   * **Fix:** Ensure inheritance only flows one way.
+
+---
+
+### **Debugging Techniques**
+
+1. **Check the `django.template` Logger**
+
+   * Enable debug logging in `settings.py` to see detailed template errors.
+
+2. **Use `{% debug %}`**
+
+   ```django
+   {% debug %}
+   ```
+
+   * Prints all variables available in the current template context.
+   * Appears directly on the page → useful in development, unsafe in production.
+
+3. **Verify Template Loaders**
+
+   * In `settings.py`, ensure `DIRS` and `APP_DIRS` are correctly set in `TEMPLATES`.
+   * Misconfigured loaders may prevent Django from finding your templates.
