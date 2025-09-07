@@ -43,23 +43,47 @@
 
 ## 3. Template Structure Tags
 
-### Inheritance
+Django provides special template tags to help you organize and reuse your HTML code. These tags make your templates easier to maintain and keep consistent across pages.
+
+---
+
+### **Inheritance**
+
 ```django
 {% extends "base.html" %}
 ```
 
-### Includes
+* **Purpose:** Allows one template to build on another.
+* **How it works:** The child template takes the layout from `base.html` and can replace or add content in predefined **blocks**.
+* **Example use case:** Having a single layout (navigation, footer, styles) while customizing only the page-specific parts.
+
+---
+
+### **Includes**
+
 ```django
 {% include "header.html" %}
 {% include "footer.html" with year=2023 only %}
 ```
 
-### Block Composition
+* **Purpose:** Reuse smaller template fragments inside other templates.
+* **Example use case:** Put your site’s header and footer in separate files and include them wherever needed.
+* **`with ... only`:** Pass extra context variables to the included template while keeping the rest of the parent’s context out.
+
+---
+
+### **Block Composition**
+
 ```django
 {% block title %}
   {{ block.super }} - Subpage
 {% endblock %}
 ```
+
+* **Purpose:** Define placeholders in a parent template (`base.html`) that child templates can override.
+* **`block.super`:** Keeps the parent block’s content and lets you add to it instead of fully replacing it.
+* **Example use case:** In the `<title>` tag, you can keep the base title and add a page-specific title.
+
 
 ## 4. URL Handling Tags
 
