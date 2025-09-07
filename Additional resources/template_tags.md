@@ -46,10 +46,6 @@
 ### Inheritance
 ```django
 {% extends "base.html" %}
-
-{% block content %}
-  Main page content
-{% endblock %}
 ```
 
 ### Includes
