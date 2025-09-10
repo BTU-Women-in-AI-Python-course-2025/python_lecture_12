@@ -108,6 +108,16 @@ def home_view(request):
         'user': request.user
     })
 ```
+Add to URLSs
+
+```python
+from django.urls import path
+from .views import home_view
+
+urlpatterns = [
+    path('', home_view, name='home'),  # '' means root URL
+]
+```
 
 ## 7. Best Practices
 
