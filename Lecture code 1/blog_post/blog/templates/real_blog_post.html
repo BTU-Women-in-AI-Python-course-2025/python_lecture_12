@@ -5,22 +5,22 @@
 <div class="container">
     <h1 class="mb-4">{{ title }}</h1>
 
-    {% if blogs %}
-        {% for blog in blogs %}
+    {% if blog_posts %}
+        {% for blog in blog_posts %}
             <div class="card mb-4 shadow-sm">
                 <div class="card-body">
                     <h2 class="card-title">
-                        <a href="{% url 'blog_detail' blog.id %}" class="text-decoration-none">
+                        <a href="{% url 'real_blog_detail' blog.id %}" class="text-decoration-none">
                             {{ blog.title }}
                         </a>
                     </h2>
                     <p class="text-muted">
-                        By {{ blog.author }} | {{ blog.date }}
+                        By {{ blog.title }} | {{ blog.text }}
                     </p>
                     <p>
-                        {{ blog.content|truncatewords:20 }}
+                        {{ blog.create_date }}
                     </p>
-                    <a href="{% url 'blog_detail' blog.id %}" class="btn btn-primary btn-sm">
+                    <a href="{% url 'real_blog_detail' blog.id %}" class="btn btn-primary btn-sm">
                         Read More →
                     </a>
                 </div>

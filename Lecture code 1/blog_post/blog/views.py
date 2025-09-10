@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
+from blog.models import BlogPost
+
 
 def home_view(request):
     return render(request, "home.html", {
@@ -52,3 +54,22 @@ def blog_detail(request, post_id):
 
 def not_found(request):
     return render(request, "404.html", {})
+
+
+def real_blog_list(request):
+    return render(request, context={
+        'title': 'Real Blog Post',
+        'blog_posts': BlogPost.objects.all(),
+    }, template_name="real_blog_post.html")
+
+
+def real_blog_detail(request, post_id):
+    blog_post = BlogPost.objects.filter(id=post_id).first()
+    if not blog_post:
+        return redirect(reverse('not_found'))
+
+
+    return render(request, "real_blog_detail.html", {
+        "title": blog_post.title,
+        "blog": blog_post
+    })
